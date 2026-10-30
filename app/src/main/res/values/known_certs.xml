@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spartan_known_certs">
+        <item>958e40f34643c8b82d950609512a7d33cd72b01f88888735fd8cdd55d81c5d33</item>
+    </string-array>
+</resources>

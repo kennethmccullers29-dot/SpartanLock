@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.TURN_SCREEN_ON" />
+    <!-- knownSigner lets the release-signed Spartan Launcher (com.ken1dot) read lock settings. -->
+    <permission android:name="com.ken1dot.spartanlock.permission.SETTINGS" android:protectionLevel="signature|knownSigner" android:knownCerts="@array/spartan_known_certs" />
+
+    <queries>
+        <provider android:authorities="com.ken1dot.spartanlauncher.accent" />
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+        <!-- Icon packs, so notification icons can follow SpartanLauncher's pack. -->
+        <intent><action android:name="org.adw.launcher.THEMES" /></intent>
+        <intent><action android:name="com.novalauncher.THEME" /></intent>
+        <intent><action android:name="com.gau.go.launcherex.theme" /></intent>
+        <intent><action android:name="com.teslacoilsw.launcher.THEME" /></intent>
+        <intent><action android:name="com.anddoes.launcher.THEME" /></intent>
+        <intent><action android:name="com.fede.launcher.THEME_ICONPACK" /></intent>
+        <intent><action android:name="com.dlto.atom.launcher.THEME" /></intent>
+        <intent><action android:name="ginlemon.smartlauncher.THEMES" /></intent>
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SpartanLock">
+        <activity
+            android:name=".MainActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.SpartanLock"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".GlanceActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:theme="@style/Theme.SpartanLock" />
+        <provider
+            android:name=".LockSettingsProvider"
+            android:authorities="com.ken1dot.spartanlock.settings"
+            android:exported="true"
+            android:permission="com.ken1dot.spartanlock.permission.SETTINGS" />
+        <service
+            android:name=".LockScreenAccessibilityService"
+            android:label="SpartanLock on lock screen"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/lock_screen_accessibility" />
+        </service>
+        <service
+            android:name=".LockNotificationListener"
+            android:label="SpartanLock quick status"
+            android:exported="false"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>
